@@ -99,6 +99,7 @@ public class BoardDAO {
 	public int update(String title, String contents, String n) {
 		SqlSession ss = null;
 		int cnt = 0;
+		board = 
 		
 		try {
 			ss = factory.openSession();   //트랜젝션 시작
