@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<mapper namespace="board.dao.BoardMapper">
+
+
+<insert id= "insertMember" parameterType="member">
+insert into member values (#{id}, #{password}, #{name}) 
+</insert>
+
+<select id="getMember" parameterType="String" resultType="member">
+select * from member where id = #{id}
+</select>
+
+<insert id= "writeboard" parameterType="board">
+insert into board (num, id, title,contents) 
+values (board_seq.nextval, #{id}, #{title} , #{contents})
+</insert>
+
+<select id = "showboard" resultType="board">
+select 
+	num 
+	, name
+	, title
+	, contents
+	, to_char(inputdate, 'yy/mm/dd') inputdate 
+from 
+	member m, board b
+where 
+	m.id = b.id
+order by
+	num 
+</select>
+
+<select id = "getNum" parameterType="string" resultType="board">
+select * from board b, member m where m.id = b.id and num like #{num}
+</select>
+
+<select id = "getCon" parameterType = "string" resultType="board">
+select 
+	* 
+from 
+	board b, member m
+where 
+	m.id=b.id and
+	contents like '%'||#{contents}||'%'
+order by
+	num
+</select>
+
+<delete id = "delete" parameterType ="int">
+delete from board where num = #{num} and
+</delete>
+
+</mapper>
